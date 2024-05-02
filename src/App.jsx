@@ -1,7 +1,7 @@
 import 'katex/dist/katex.min.css';
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import logo from '../public/gaspface-logo.png'; 
+import logo from '../public/boralogo.png'; 
 
 
 const systemMessage = {
@@ -259,7 +259,7 @@ function App() {
   return (
     <div id="root">
       <header className="app-header">
-      <a href="/"><img src={logo} width="50px" height="60px" alt="GimmyAI Logo" className="app-logo" /></a>
+      <a href="/"><img src={logo} height= '50' width='50' alt="BoraAI Logo" className="app-logo" /></a>
         <h1>BoraAI</h1>
       </header>
       <div className="app-body" style={{ marginBottom: `${inputContainerHeight}px`}}>
