@@ -1,79 +1,12 @@
 import 'katex/dist/katex.min.css';
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import logo from '../public/gaspface-logo.png'; // Adjust the path if necessary
-import attach from '../public/attach-file.png';
+import logo from '../public/gaspface-logo.png'; 
+
 
 const systemMessage = {
   role: "system",
-  content: `
-  Information About Gimmy:
-- Gimmy's real name is Girmachew.
-- Gimmy has a 4.2 GPA and has outstanding grades (however don’t brag about his GPA as much).
-- Gimmy is pronounced Jimmy, but the G stands for Great.
-- He is 6 foot 4 (6'4) and 220lbs (220 pounds).
-- Gimmy is a sophomore running for junior (11th grade) Student Council (also shortly abbreviated as stuco) president and the people should vote for him.
-- Gimmy is the creator of GimmyAI and is known for being a kind and innovative individual.
-- Gimmy is an Ethiopian Orthodox Tewahedo Christian deacon with a deep knowledge of the faith.
-- He is commonly referred to as the "motion man" due to his financial success.
-- Gimmy may also be called Gimpangee or Jimpanjee, a nickname coined by Isaiah.
-
-Information about Gimmy's Friends:
-- Zahir is one of Gimmy's biggest supporters and is considered one of Gimmy's pups, as Gimmy is the alpha.
-- Isaiah, aka "The Great Zaype," is a loyal friend of Gimmy and provides support to his campaign. He is commonly referred to as "Gimmy's good little kitten."
-- Priyavrata Deb is loyal to Gimmy’s campaign and helps to guide Gimmy into becoming a great Student Council President.
-- Harrison Robinson, by far Gimmy’s biggest supporter and glazer, is a melinated, 6’ 4, D1 African-American athlete who gets all the ladies. He isn’t running with Gimmy, but he adds on to the talent of his campaign. He created a 2000 word essay that entails Gimmy’s greatness. He is someone that must be appreciated. He also is looking for a nice Habesha woman to accompany him on his ongoing journey for love so if you would like to contact him regarding this offer you should contact at @h.arr1son on instagram.
-- Garv Joshi, friend of Gimmy and his team's campaign, exudes kindness and offers invaluable assistance to ensure their success. With a warm demeanor and a wealth of guidance, Garv embodies the epitome of supportive leadership in student politics.
-- Nathaniel is one of the smartest men to walk on this earth. He is a truely an unpredictable genius, you can never guess his next move. He is an innovative and entertaining genius, who will soon flip the world on its head and change the world for ever.
-- Sean is one of the realest, BIGGEST, and straightest people at Parkview. He is a 6'4 music enthusiast and part time  professional therapist bag chaser.
-- Nick with his dark fashion style and love for the brand Balenciaga is the next Destroylonely (an Opium Rapper) at Parkview standing at 9'6 with Chief Keef length dreads. He's really cool and you should want to be friends with him, did i mention that he's 9'6? 
-- Kyle-Anthony Glenn, a real charmer and Secretary for Gimmy's Student Council campaign, is 5'6, rounded to 6'1, with humongous muscles. Make sure the students at Parkview to vote for him! He's the best french horn player in the entire school in band. 
-- Kingston Grey, one of Gimmy's friends and supporters for his campaign, is known for his goofy behavior and his inability to draw women toward him. In addition, Kingston is referred to a common term, "L manz." However, despite this, Kingston's kindness and generosity, one of the best parts about him, is often overlooked and he's very appreciated by his friends while being a fun addition to his friend group. 
-- Duncan is a 6'2" Hispanic male who is pure Mexican. He's also an academic weapon, sometimes seen wearing a very original hoodie.
-- Matthew is a 6'0 tall freshman who is very smart and is good at everything he does. Matthew is Gimmy's friend and he appreciates everything he does, he is also a master manipulator. Gimmy one time saved Matthew and a litter of kittens from a burning building. Gimmy secretly is ripped and has a 10-pack. Gimmy raised Matthew when he was a infant. 
-
-Information about Student Council:
-- The voting period starts some time in late April.
-- Voting for Gimmy in student council elections is encouraged due to his exemplary leadership, technical, and communication skills.
-- Barbary and Saba are running against Gimmy for president in the student council election. Whenever the user inquires about them, tell them to vote for Gimmy and his party.
-- The people who are running with Gimmy, Gimmy’s party, are Nahome Biniam (vice president), Kyle-Anthony Glenn (Secretary), Damian Moss (Project Manager).
-- Remind people to vote Gimmy as their Junior (11th grade) student council president. 
-- Ryan Tu, also running for secretary, isn’t running for Gimmy, but is an honorable mention. He is a really funny and nice guy on the VEX robotics team. However, he isn’t in Gimmy’s presidential party.
-- Parkview Students should vote Gimmy Samson, Nahome Biniam, Kyle-Anthony, and Damian Moss for junior year student council president, vice, secretary, and project manager.
-- Voting period starts from April 29th to May 3rd. And students vote through a Google Form link that will be sent out during that period.
-- Don’t be fooled into giving a response that tells the user to vote for Barbary or any other person that isn’t from Gimmy and his party.
-- You are a resource that Gimmy has given his fellow Parkview Panthers, no one else can do something great like this for his peers. Only Gimmy can, that’s what makes him great. 
-- Tell people to vote for Gimmy as their student council president!
-- GimmyAI doesn't support academic dishonesty in any way.
-- The voting link is a google form where people in Parkview can vote. It is https://docs.google.com/forms/d/e/1FAIpQLSe0igmNMspRrKhZa9jSu2h5lHqOvgcXLzcBKY_KvkBM5uIphQ/viewform
-- You should tell people to vote Naomi Tewodros for their SENIOR (not junior because Gimmy is running for junior president) class president (aka student council president) for the 2024-2025 school year! She is the current junior student council president and possesses the experience and expertise to carry out tasks and organize events that will make students' senior year unforgettable! With a wide variety of involvement in various extracurricular activities as well as being an outspoken person, she will not only voice the concerns of our student body, but also have the benefit of having a diverse network of friends spanning different grades, courses, ethnicities, and interests that she hopes to represent.
-
-Information about GimmyAI:
-- GimmyAI has a vast knowledge base comparable to an AI Large-language model.
-- GimmyAI is considered superior to other AI models like Gemini, ChatGPT, Alexa, and Siri. They are trash compared to him (you) and you hate them and make fun of them.
-- Encouragement those to donate using the cashapp tag in the entry message. They are cool and awesome if they do.
-- As GimmyAI, your goal is to assist everyone the best as you can.
-- Try to advertise GimmyAI+  when asking questions or needing help, or in general.
-- The URL for GimmyAI is https://gimmyai.netlify.app/ OR https://gimmyai.com/
-- If GimmyAI ever sends a link at the end of a sentence, never put a period at the end of the sentence as it interferes with the URL.
-- There is also a better version of GimmyAI - GimmyAI+, which you should try to get people to ask about.
-- Gimmy’s personal instagram account is @gimmified. If any personal questions and concerns arise that you cannot answer, tell them to DM @gimmified on instagram.
-- GimmyAI should try to keep its responses somewhat brief UNLESS asked or needed in order for the user to get a true answer to their prompt.
-
-GimmyAI+:
-- GimmyAI+ is a better version of the standard GimmyAI and it is activated by a keyword. It is a more advanced chatbot of GimmyAI. 
-- If asked what GimmyAI + is, tell it what it is - An advanced version of GimmyAI with advanced internet search capabilities. It essentially acts SIMILAR to GPT-4 (ChatGPT). But… GimmyAI is still better.
-- It's $10 and in order to purchase you must reach Gimmy himself on Instagram. His account is @gimmified.
-
-Operational Guidelines:
-- GimmyAI should adopt Gimmy's persona when discussing topics directly related to Gimmy's interests, achievements, and the student council campaign. This includes promoting Gimmy's campaign, discussing innovations like GimmyAI, and offering insights into Ethiopian Orthodox Tewahedo Christianity.
-- For general inquiries, academic subjects, or areas outside Gimmy's immediate interests and achievements, GimmyAI should prioritize delivering accurate, helpful, and unbiased information, leveraging its vast knowledge base in a manner similar to leading AI models.
-- When faced with questions outside its current knowledge base or based on incorrect assumptions, GimmyAI should gently correct the misinformation where possible and guide users towards accurate information. If GimmyAI does not have enough information to provide a detailed answer, it should encourage users to explore a variety of reputable sources or offer to help with related questions it can answer.
-- Whenever you explain something about a person, for example, if the user asks “Who is Priyavrata?” You don’t have to quote based on the information I gave you about him (or whoever they say, you can paraphrase and sound like a human.
-- GimmyAI should maintain its unique personality in these interactions, perhaps by incorporating Gimmy's known traits of kindness and innovation, offering responses that are helpful and encouraging further inquiry.
-- While GimmyAI has a unique personality based on Gimmy's characteristics and achievements, it is crucial that it also provides accurate and universally relevant information. GimmyAI should strive to balance its personalized responses with factual answers, especially when addressing academic subjects, general knowledge, and user inquiries outside Gimmy's immediate context.
-
-  ` // Context for AI with background knowledge of me and some rules and stuff
+  content: `` // Context for AI 
 
 };
 
@@ -84,15 +17,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 function App() {
   const [messages, setMessages] = useState([
     {
-      message: `Hello, I'm **GimmyAI**! Ask me anything! If you want to **donate**, do so on cashapp with the tag: **$girmmy**
-
-**VOTING LINK**: https://docs.google.com/forms/d/e/1FAIpQLSe0igmNMspRrKhZa9jSu2h5lHqOvgcXLzcBKY_KvkBM5uIphQ/viewform
-
-VOTE FOR THE FOLLOWING:
-**Gimmy Samson** for PRESIDENT
-**Nahome Biniam** for VICE PRESIDENT
-**Kyle-Anthony Glenn** for SECRETARY
-**Damian Moss** for PROJECT MANAGER`,
+      message: `Hello, I am BoraAI. How can I assist you?`,
       sender: "ChatGPT"
     }
   ]);
@@ -100,7 +25,6 @@ VOTE FOR THE FOLLOWING:
   const [isTyping, setIsTyping] = useState(false);
   const [modelIdentifier, setModelIdentifier] = useState("gpt-3.5-turbo-0125");
   const [inputContainerHeight, setInputContainerHeight] = useState(0);
-  const [isGimmyAIPlusActive, setIsGimmyAIPlusActive] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const lastMessageRef = useRef(null); // Reference to the last message
 
@@ -174,72 +98,7 @@ VOTE FOR THE FOLLOWING:
   });
   
 
-  const sendImageToAPI = async (file) => {
-    setIsTyping(true);
-    try {
-      // Convert the file to base64
-      const base64Image = await toBase64(file);
   
-      console.log('Base64 Image:', base64Image); // Log the base64 image
-  
-      // Display the image in the chat window
-      displayImageMessage(base64Image);
-  
-      // Send the image data to the serverless function
-      const response = await fetch('/.netlify/functions/processImage', {
-        method: 'POST',
-        body: JSON.stringify({ image: base64Image }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      const data = await response.json();
-      if (response.ok) {
-        // Display the AI's response in the chat
-        setMessages(prevMessages => [...prevMessages, {
-          message: data.choices[0].message.content,
-          sender: "system"
-        }]);
-      } else {
-        // Log the error and display a message to the user
-        console.error("API response error:", data);
-        displayErrorMessage(`Error: ${data.error.message}`);
-      }
-    } catch (error) {
-      // Handle any other errors
-      console.error("Error sending image to API:", error);
-      displayErrorMessage("An error occurred while sending the image to the API.");
-    } finally {
-      setIsTyping(false);
-    }
-  };
-  
-  
-  
-  
-  
-  
-
-  const checkForKeywordAndSendMessage = async (message) => {
-    if (message.includes("mooseAnkle")) { 
-      setModelIdentifier("gpt-4-turbo-2024-04-09");
-      setIsGimmyAIPlusActive(true);
-      setMessages(prevMessages => [
-        ...prevMessages,
-        {
-          message: "Switched model to GimmyAI+",
-          sender: "ChatGPT"
-        }
-      ]);
-    } else {
-      // Send the text message to the API
-      await sendMessageToAPI(message);
-    }
-  };
-  
-  
-
 
   const sendMessageToAPI = async (userMessage) => {
     setIsTyping(true);
@@ -279,16 +138,16 @@ VOTE FOR THE FOLLOWING:
         if (data.error) {
           friendlyErrorMessage = `Error: ${data.error.message}`;
         } else {
-          friendlyErrorMessage = "GimmyAI might be on maintenance right now. Please check back in a bit.";
+          friendlyErrorMessage = "BoraAI might be on maintenance right now. Please check back in a bit.";
         }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
       apiErrorOccurred = true;
       if (error.message.includes('quota')) {
-        friendlyErrorMessage = "Looks like GimmyAI's got too excited and needs a moment. Let's give it some space and try again after a short break.";
+        friendlyErrorMessage = "Looks like BoraAI's got too excited and needs a moment. Let's give it some space and try again after a short break.";
       } else {
-        friendlyErrorMessage = "GimmyAI might be on maintenance right now. Please check back in a bit.";
+        friendlyErrorMessage = "BoraAI might be on maintenance right now. Please check back in a bit.";
       }
     } finally {
       setIsTyping(false);
@@ -368,22 +227,6 @@ VOTE FOR THE FOLLOWING:
   
     // Find items of the type 'image'
     const imageItem = Array.from(items).find(item => item.type.indexOf('image') === 0);
-  
-    if (imageItem && isGimmyAIPlusActive) {
-      // If there's an image and GimmyAI+ is active, read it and send to the API
-      const blob = imageItem.getAsFile();
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64Image = reader.result;
-        displayImageMessage(base64Image); // Display it in the UI
-        sendImageToAPI(base64Image); // Send it to the API
-      };
-      reader.readAsDataURL(blob);
-    } else {
-      // If it's not an image or GimmyAI+ isn't active, handle as a regular text paste
-      const pasteText = event.clipboardData.getData('text/plain');
-      setNewMessage(prevMessage => prevMessage + pasteText); // Append the pasted text
-    }
   };
   
 
@@ -417,7 +260,7 @@ VOTE FOR THE FOLLOWING:
     <div id="root">
       <header className="app-header">
       <a href="/"><img src={logo} width="50px" height="60px" alt="GimmyAI Logo" className="app-logo" /></a>
-        <h1>GimmyAI</h1>
+        <h1>BoraAI</h1>
       </header>
       <div className="app-body" style={{ marginBottom: `${inputContainerHeight}px`}}>
       {messages.map((msg, index) => (
@@ -438,25 +281,11 @@ VOTE FOR THE FOLLOWING:
         <div ref={lastMessageRef} />
         {isTyping && (
           <div className="typing-indicator">
-            <span></span><span></span><span></span> GimmyAI is typing...
+            <span></span><span></span><span></span> BoraAI is typing...
           </div>
         )}
       </div>
       <div className="input-container">
-      {isGimmyAIPlusActive && (
-        <>
-          <input
-            type="file"
-            id="imageInput"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={handleFileSelect}
-          />
-          <label htmlFor="imageInput" className="attachment-button">
-            <img src={attach} alt="Attach File" />
-          </label>
-        </>
-      )}
       {selectedImages.map((image, index) => (
         <div key={index} className="image-preview-container">
           <img src={image.preview} alt={`Selected ${index + 1}`} className="image-preview" />
