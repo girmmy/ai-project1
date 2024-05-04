@@ -23,9 +23,9 @@ function App() {
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [modelIdentifier, setModelIdentifier] = useState("gpt-3.5-turbo-0125");
+  const [modelIdentifier] = useState("gpt-3.5-turbo-0125");
   const [inputContainerHeight, setInputContainerHeight] = useState(0);
-  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedImages] = useState([]);
   const lastMessageRef = useRef(null); // Reference to the last message
 
   useEffect(() => {
@@ -57,32 +57,6 @@ function App() {
     }
   }, [messages]);
 
-  const handleFileSelect = (event) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      const imageFiles = Array.from(files).slice(0, 3); // Limit to 3 images
-      const imagePromises = imageFiles.map(file => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve({ file, preview: reader.result });
-          reader.onerror = () => reject(reader.error);
-          reader.readAsDataURL(file);
-        });
-      });
-      Promise.all(imagePromises)
-        .then(images => {
-          setSelectedImages(images);
-        })
-        .catch(error => console.error("Error reading file:", error));
-    }
-  };
-  
-
-  const displayImageMessage = (base64Image) => {
-    // Add the base64 image as a message from the user
-    setMessages(prevMessages => [...prevMessages, { message: base64Image, sender: 'user', image: true }]);
-  };
-  
   
   const displayErrorMessage = (errorMessage) => {
     // Append the error message to the chat as a system message
@@ -90,16 +64,7 @@ function App() {
   };
 
 
-  const toBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result.split(',')[1]); // Remove the data URL prefix
-    reader.onerror = error => reject(error);
-  });
   
-
-  
-
   const sendMessageToAPI = async (userMessage) => {
     setIsTyping(true);
     let apiErrorOccurred = false;
@@ -165,7 +130,6 @@ function App() {
   const handleSendMessage = async () => {
     if (!newMessage.trim() && selectedImages.length === 0) return;
   
-    // Define outgoingMessage at the top so it's available in the entire scope
     const outgoingMessage = {
       message: newMessage,
       sender: 'user'
@@ -176,31 +140,22 @@ function App() {
     );
   
     if (isDuplicateMessage) {
-      // If it's a duplicate, don't proceed further
       return;
     }
   
     setIsTyping(true);
   
-    // If there's a new text message, add it to the messages state
     if (newMessage.trim()) {
       setMessages(prevMessages => [...prevMessages, outgoingMessage]);
     }
   
-    // Clear the input field immediately before doing any async operations
     setNewMessage('');
   
-    // Perform the async operations
-    if (selectedImages.length > 0) {
-      await Promise.all(selectedImages.map(image => sendImageToAPI(image.file)));
-      setSelectedImages([]); // Clear the selected images after sending
-    } else if (outgoingMessage.message.trim()) {
-      await checkForKeywordAndSendMessage(outgoingMessage.message);
-    }
+    // Call sendMessageToAPI here
+    await sendMessageToAPI(outgoingMessage.message);
   
     setIsTyping(false);
   };
-  
   
   
 
@@ -223,10 +178,8 @@ function App() {
     // Prevent the default paste action
     event.preventDefault();
     // Use the Clipboard API to access the data directly
-    const items = event.clipboardData.items;
   
     // Find items of the type 'image'
-    const imageItem = Array.from(items).find(item => item.type.indexOf('image') === 0);
   };
   
 
@@ -286,12 +239,6 @@ function App() {
         )}
       </div>
       <div className="input-container">
-      {selectedImages.map((image, index) => (
-        <div key={index} className="image-preview-container">
-          <img src={image.preview} alt={`Selected ${index + 1}`} className="image-preview" />
-        </div>
-      ))}
-
       <textarea
         type="text"
         placeholder="Type a message..."
